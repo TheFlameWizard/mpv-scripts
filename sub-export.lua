@@ -34,7 +34,7 @@ function export_selected_subtitles()
                 return
             end
 
-            local video_file = mp.get_property("working-directory") .. "/" .. mp.get_property("filename")
+            local video_file = mp.get_property("path") .. "/" .. mp.get_property("filename")
 
             local subtitles_ext = ".srt"
             if track_codec == "ass" then
@@ -45,7 +45,9 @@ function export_selected_subtitles()
                 subtitles_ext = "." .. track_lang .. subtitles_ext
             end
             
-            subtitles_file = mp.get_property("working-directory") .. "/" .. mp.get_property("filename/no-ext") .. subtitles_ext
+            local output_directory = ""
+            output_directory, _ = utils.split_path(video_file)       
+            subtitles_file = output_directory .. "/" .. mp.get_property("filename/no-ext") .. subtitles_ext
 
             mp.osd_message("Exporting selected subtitles")
 
